@@ -1,0 +1,77 @@
+{
+    "chaincode": {
+        "9000": {
+            "severity": 5,
+            "message": "Number of Arguments less than two"
+        },
+        "9001": {
+            "severity": 5,
+            "message": "Unknown Function Name"
+        },
+        "9002": {
+            "severity": 5,
+            "message": "No Function Executed"
+        },
+        "9003": {
+            "severity": 5,
+            "message": " Product ID is already exists ."
+        },
+        "9004": {
+            "severity": 5,
+            "message": "Package ID is already exists ."
+        },
+        "9005": {
+            "severity": 5,
+            "message": "Unable to unmarshal data ."
+        },
+        "9006": {
+            "severity": 5,
+            "message": "Unable to marshal data ."
+        },
+        "9007": {
+            "severity": 5,
+            "message": "Unable to Put state ."
+        },
+        "9008": {
+            "severity": 5,
+            "message": "Duplicate Product ID"
+        },
+        "9009": {
+            "severity": 5,
+            "message": "Workflow ID already exists."
+        },
+        "9010": {
+            "severity": 5,
+            "message": "Unable to get state."
+        },
+        "9011": {
+            "severity": 5,
+            "message": "Product ID not found."
+        },
+
+        "9101": {
+            "severity": 5,
+            "message": "Unknown Function Name."
+        },
+        "9102": {
+            "severity": 5,
+            "message": "Unable to unmarshal user object"
+        },
+        "9103": {
+            "severity": 5,
+            "message": "Unable to put user object"
+        },
+        "9104": {
+            "severity": 5,
+            "message": "Unable to get user object"
+        },
+        "9105": {
+            "severity": 5,
+            "message": "Unable to unmarshal user object"
+        },
+        "9106": {
+            "severity": 5,
+            "message": "Error matching password"
+        }
+    }
+}

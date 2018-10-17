@@ -1,0 +1,10 @@
+{
+   "CC_SRC_PATH":"./artifacts",
+   "chaincodeID" : "user14",
+   "admins":[
+      {
+         "username":"admin",
+         "secret":"adminpw"
+      }
+   ]
+}

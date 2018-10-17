@@ -1,0 +1,13 @@
+﻿{
+    "connectionString": "mongodb://localhost:27017/FrenchCustoms",
+    "apiUrl": "http://localhost:4000",
+    "newApiUrl": "http://localhost:8080",
+    "secret": "REPLACE THIS WITH YOUR OWN SECRET, IT CAN BE ANY STRING",
+    "peers": ["peer0.org1.example.com"],
+    "channelName": "mychannel",
+    "chaincodeName" :"marbles",
+    "username" :"admin",
+    "orgName": "Org1",
+    "mongoConnection": "mongodb://localhost:27017",
+	"mongodb" :"FrenchCustoms"
+}
