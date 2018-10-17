@@ -1,30 +1,11 @@
-var config = require('config.json');
-var MongoClient = require('mongodb').MongoClient;
-var _db;
+const  mongoose  = require('mongoose');
 
 module.exports = {
-
-  Connect : function(app) {
-    var db = MongoClient.connect(config.mongoConnection  , function (err, db) {
-      if (!err) {
-        console.log("Connected to : " + config.mongoConnection)
-        const dbName = 'FrenchCustoms';
-        _db = db.db(dbName);
-        //app.set("mongodb", db);
-        //console.log(db);
-        //_db = db;
-      } else {
-        //logger.debug("Unable to connect to MongoDB: " + config.mongoConnection)
-      }
-    });
-
-    return _db;
-  },
-
-  getDb: function() {
-    return _db;
-  },
-  getMongo:function() {
-    return mongo;
+  start :  function(connectionstring){
+    mongoose.connect(connectionstring);
+    mongoose.connection
+      .once('open',()=>{console.log('connected with DB');})
+      .on('error',(err)=>{ console.warn('ERR => ', err)});
   }
+
 };

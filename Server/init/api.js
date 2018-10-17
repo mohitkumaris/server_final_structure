@@ -34,6 +34,9 @@ const app = function () {
 
 
     //  Register ModulesRoute
+    const registerRoute=require('../modules/registration/route');
+    appObject.use('/api/' + registerRoute.path,registerRoute.guard,registerRoute.protected,);
+    appObject.use('/api/' + registerRoute.path, registerRoute.unprotected);
 
     // services Route
     const commonRoute = require('../modules/common/routes');
@@ -45,6 +48,10 @@ const app = function () {
     appObject.use('/api/' + vendorRoute.path, vendorRoute.unprotected);
 
   };
+
+  App.prototype.enableLogger=function(){
+
+  }
 
   let instance;
 
