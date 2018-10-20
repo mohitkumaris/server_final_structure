@@ -1,45 +1,47 @@
-var appRoot = require('app-root-path');
-var winston = require('Server/init/winston');
+module.exports = {
 
-module.exports = {start: function()
-{
-  const {createLogger, format, transports} = winston
-  const {combine, timestamp, label, printf, colorize, prettyPrint} = format
-  const myFormat = printf(info => {
-    return `${info.timestamp} [${info.label}] ${info.level}: ${info.message}`
-  })
+  Logger: function() {
 
-  var myModulePath = appRoot.resolve('/logs/app.log');
-  console.log(myModulePath)
+      const appRoot = require('app-root-path');
+      const winston = require('winston');
 
-  var logger = winston.createLogger({
-    format: combine(
-      label({label: 'Syndication'}),
-      colorize(), // Here is where the color happens
-      timestamp(),
-      myFormat
-    ),
-    transports: [
-      new transports.Console({
-        level: "debug",
-        colorize: true,
-        handleExceptions: true,
-        humanReadableUnhandledException: true
-      }),
-      new transports.File({filename: myModulePath, level: 'info', colorize: true}),
-      new transports.File({filename: myModulePath, colorize: true, level: 'debug', handleExceptions: true})
-    ],
-    exitOnError: false, // do not exit on handled exceptions
-  });
+      // define the custom settings for each transport (file, console)
+      var options = {
+          file: {
+              level: 'info',
+              filename: `${appRoot}/Server/logs/app.log`,
+              handleExceptions: true,
+              json: true,
+              maxsize: 5242880, // 5MB
+              maxFiles: 5,
+              colorize: false,
+          },
+          console: {
+              level: 'debug',
+              handleExceptions: true,
+              json: false,
+              colorize: true,
+          },
+      };
 
-// create a stream object with a 'write' function that will be used by `morgan`
-  logger.stream = {
-    write: function (message, encoding) {
-      // use the 'info' log level so the output will be picked up by both transports (file and console)
-      logger.info(message);
-    },
-  };
+      // instantiate a new Winston Logger with the settings defined above
+      var logger = new winston.Logger({
+          transports: [
+              new winston.transports.File(options.file),
+              new winston.transports.Console(options.console)
+          ],
+          exitOnError: false, // do not exit on handled exceptions
+      });
+
+      // create a stream object with a 'write' function that will be used by `morgan`
+      logger.stream = {
+          write: function(message, encoding) {
+              // use the 'info' log level so the output will be picked up by both transports (file and console)
+              logger.info(message);
+          },
+      };
+      return logger;
+
+  }
 
 }
-}
-

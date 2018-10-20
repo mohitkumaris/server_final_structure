@@ -1,6 +1,8 @@
 const  express  = require('express'),
 cors = require('cors'),
 path  = require('path'),
+morgan = require('morgan'),
+winston  = require('./winston'),
 bodyparser  =  require('body-parser');
 const app = function () {
 
@@ -32,7 +34,12 @@ const app = function () {
   };
   App.prototype.registerRoutes = function (appObject) {
 
+    const registerRoute=require('../modules/authentication/route');
+    appObject.use('/api/' + registerRoute.path,registerRoute.protected,);
+    appObject.use('/api/' + registerRoute.path, registerRoute.unprotected);
 
+
+    /*
     //  Register ModulesRoute
     const registerRoute=require('../modules/registration/route');
     appObject.use('/api/' + registerRoute.path,registerRoute.guard,registerRoute.protected,);
@@ -46,11 +53,21 @@ const app = function () {
     const vendorRoute = require('../modules/vendor/routes');
     appObject.use('/api/' + vendorRoute.path, vendorRoute.protected);
     appObject.use('/api/' + vendorRoute.path, vendorRoute.unprotected);
-
+    */
   };
 
-  App.prototype.enableLogger=function(){
+  App.prototype.enableLogger=function(appObject){
+    appObject.use(morgan('combined', { stream: winston.stream }));
+   
+  }
 
+  App.prototype.OnError  = function(appObject){
+    appObject.use(function(err, req, res, next) {
+    // winston.Logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+      // render the error page
+      res.status(err.status || 500);
+      res.render('error');
+    });
   }
 
   let instance;
