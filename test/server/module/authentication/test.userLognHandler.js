@@ -22,10 +22,10 @@ describe("User Login Handler",()=>{
     it("Register  New User",(done)=>{
 
             var  model  =  {
-                username : 'hparkash',
-                password  : 'Essex@123',
-                fName :  'Himanshu',
-                lName :  'Parkash'
+                username: 'mkumar',
+                password: 'sopra@123',
+                fName: 'Mohit',
+                lName: 'Kumar'
             };
             UserLoginHandler.RegisterNewUser(model).then((response)=>{
                   assert(response.username === model.username);
@@ -38,4 +38,4 @@ describe("User Login Handler",()=>{
 
     });
 
-})
+});

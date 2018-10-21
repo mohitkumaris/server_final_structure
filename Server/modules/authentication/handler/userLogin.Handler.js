@@ -19,7 +19,7 @@ module.exports =  {
     RegisterNewUser  : function(model){
         var dbmodel  = new DbModel();
         dbmodel.username  = model.username || '';
-        dbmodel.passord  = model.passord || '';
+        dbmodel.password = model.password || '';
         dbmodel.fName = model.fName || '';
         dbmodel.lName  = model.lName  || '';
         dbmodel.avator  =  model.avator  || SharedEnums.noImage; 
