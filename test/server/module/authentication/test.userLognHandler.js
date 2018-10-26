@@ -20,9 +20,9 @@ describe("User Login Handler",()=>{
     });
 
     it("Register  New User",(done)=>{
-
+             var randomName=math.RandomString();
             var  model  =  {
-                username: 'mkumar',
+                username: randomName,
                 password: 'sopra@123',
                 fName: 'Mohit',
                 lName: 'Kumar'

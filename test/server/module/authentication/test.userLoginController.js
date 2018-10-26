@@ -7,7 +7,7 @@ chai.use(chaiHttp);
 let expect = chai.expect;
 
 describe('User Controller', () => {
-    it('should register', (done) => {
+    xit('should register', (done) => {
         let userName = {
             username: 'mkumar',
             password: 'sopra@123',
