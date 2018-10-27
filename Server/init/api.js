@@ -2,7 +2,11 @@ const  express  = require('express'),
 cors = require('cors'),
 path  = require('path'),
 morgan = require('morgan'),
-winston  = require('./winston'),
+    winston = require('./winston'),
+    fs = require('fs'),
+    _ = require('lodash'),
+    moment = require('moment-timezone'),
+    config = require('../config/config');
 bodyparser  =  require('body-parser');
 const app = function () {
 
@@ -20,6 +24,7 @@ const app = function () {
       res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
       next();
     });
+
 
     return appObject;
   };
@@ -57,13 +62,28 @@ const app = function () {
   };
 
   App.prototype.enableLogger=function(appObject){
-    appObject.use(morgan('combined', { stream: winston.stream }));
-   
-  }
+      const accessLogStream = fs.createWriteStream(
+          path.join(__dirname, 'logs', 'access.log'),
+          {flags: 'a'}
+      );
+
+      morgan.token('pid', (req, res) => {
+          return _.get(req, 'session.user.pid') || 'Guest';
+      });
+      morgan.token('date', (req, res, tz) => {
+          return moment().tz(tz).format();
+      });
+      // Intl.DateTimeFormat().resolvedOptions().timeZone;
+      // Run the above command to know the exact timezone in node cmd.
+      morgan.format('myformat', ':pid - [:date[' + config.configuration.ContinentCity + '] ":method :url" :status :res[content-length] - :response-time ms');
+      appObject.use(morgan('myformat', {stream: winston.stream}))
+
+  };
 
   App.prototype.OnError  = function(appObject){
     appObject.use(function(err, req, res, next) {
-    // winston.Logger.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
+
+        winston.error(`${err.status || 500} - ${err.message} - ${req.originalUrl} - ${req.method} - ${req.ip}`);
       // render the error page
       res.status(err.status || 500);
       res.render('error');
